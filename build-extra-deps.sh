@@ -102,5 +102,6 @@ if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
   #  -DJPEGXL_FORCE_SYSTEM_HWY=ON \
   #  .
   #make install/strip
+  echo ""
 
 fi
