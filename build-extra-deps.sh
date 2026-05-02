@@ -68,39 +68,39 @@ if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
   # make install/strip
 
   # openjpeg (JPEG 2000 / JP2 support)
-  mkdir "${DEPS}/openjpeg"
-  $CURL https://github.com/uclouvain/openjpeg/archive/v${VERSION_OPENJPEG}.tar.gz | tar xzC "${DEPS}/openjpeg" --strip-components=1
-  cd "${DEPS}/openjpeg"
-  cmake -G"Unix Makefiles" \
-    -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
-    -DBUILD_SHARED_LIBS=FALSE \
-    -DBUILD_TESTING=OFF \
-    -DBUILD_CODEC=OFF \
-    .
-  make install/strip
+  #mkdir "${DEPS}/openjpeg"
+  #$CURL https://github.com/uclouvain/openjpeg/archive/v${VERSION_OPENJPEG}.tar.gz | tar xzC "${DEPS}/openjpeg" --strip-components=1
+  #cd "${DEPS}/openjpeg"
+  #cmake -G"Unix Makefiles" \
+  #  -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
+  #  -DBUILD_SHARED_LIBS=FALSE \
+  #  -DBUILD_TESTING=OFF \
+  #  -DBUILD_CODEC=OFF \
+  #  .
+  #make install/strip
 
   # libjxl (JPEG XL support)
   # Depends on: highway (system), lcms2 (system), libpng (system), brotli (system - built above)
-  mkdir "${DEPS}/jxl"
-  $CURL https://github.com/libjxl/libjxl/archive/v${VERSION_JXL}.tar.gz | tar xzC "${DEPS}/jxl" --strip-components=1
-  cd "${DEPS}/jxl"
-  CFLAGS="${CFLAGS} -O3" CXXFLAGS="${CXXFLAGS} -O3" cmake -G"Unix Makefiles" \
-    -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
-    -DBUILD_SHARED_LIBS=FALSE \
-    -DBUILD_TESTING=OFF \
-    -DJPEGXL_ENABLE_TOOLS=OFF \
-    -DJPEGXL_ENABLE_DOXYGEN=OFF \
-    -DJPEGXL_ENABLE_MANPAGES=OFF \
-    -DJPEGXL_ENABLE_BENCHMARK=OFF \
-    -DJPEGXL_ENABLE_EXAMPLES=OFF \
-    -DJPEGXL_ENABLE_SJPEG=OFF \
-    -DJPEGXL_ENABLE_OPENEXR=OFF \
-    -DJPEGXL_ENABLE_SKCMS=OFF \
-    -DJPEGXL_ENABLE_TRANSCODE_JPEG=OFF \
-    -DJPEGXL_FORCE_SYSTEM_BROTLI=OFF \
-    -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
-    -DJPEGXL_FORCE_SYSTEM_HWY=ON \
-    .
-  make install/strip
+  #mkdir "${DEPS}/jxl"
+  #$CURL https://github.com/libjxl/libjxl/archive/v${VERSION_JXL}.tar.gz | tar xzC "${DEPS}/jxl" --strip-components=1
+  #cd "${DEPS}/jxl"
+  #CFLAGS="${CFLAGS} -O3" CXXFLAGS="${CXXFLAGS} -O3" cmake -G"Unix Makefiles" \
+  #  -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
+  #  -DBUILD_SHARED_LIBS=FALSE \
+  #  -DBUILD_TESTING=OFF \
+  #  -DJPEGXL_ENABLE_TOOLS=OFF \
+  #  -DJPEGXL_ENABLE_DOXYGEN=OFF \
+  #  -DJPEGXL_ENABLE_MANPAGES=OFF \
+  #  -DJPEGXL_ENABLE_BENCHMARK=OFF \
+  #  -DJPEGXL_ENABLE_EXAMPLES=OFF \
+  #  -DJPEGXL_ENABLE_SJPEG=OFF \
+  #  -DJPEGXL_ENABLE_OPENEXR=OFF \
+  #  -DJPEGXL_ENABLE_SKCMS=OFF \
+  #  -DJPEGXL_ENABLE_TRANSCODE_JPEG=OFF \
+  #  -DJPEGXL_FORCE_SYSTEM_BROTLI=OFF \
+  #  -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
+  #  -DJPEGXL_FORCE_SYSTEM_HWY=ON \
+  #  .
+  #make install/strip
 
 fi
