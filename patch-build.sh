@@ -31,24 +31,22 @@ case ${PLATFORM} in
     grep -q 'jpeg-xl=disabled' "$BUILD_FILE" || exit 0
 
     # Enable JXL in vips meson build
-    #sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=enabled/' "$BUILD_FILE"
+    sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=enabled/' "$BUILD_FILE"
 
     # Enable openjpeg (JP2) in vips meson build
-    #sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
+    sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
 
     # Enable DAV1D decoder in libheif cmake build (for HEIC AV1 support)
-    # Temporarily disabled to diagnose CI failures
-    # sed -i.bak 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' "$BUILD_FILE"
+    sed -i.bak 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' "$BUILD_FILE"
 
     # Inject dav1d build BEFORE heif (dav1d is required by libheif for HEIC/AV1)
-    # Temporarily disabled to diagnose CI failures
     # NOTE: ${PACKAGE} is written literally here; posix.sh expands it at runtime
-    # awk '
-    # /mkdir \$\{DEPS\}\/heif/ {
-    #   print "bash ${PACKAGE}/custom/build-extra-deps.sh pre-heif"
-    # }
-    # { print }
-    # ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+    awk '
+    /mkdir \$\{DEPS\}\/heif/ {
+      print "bash ${PACKAGE}/custom/build-extra-deps.sh pre-heif"
+    }
+    { print }
+    ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
 
     # Inject brotli + openjpeg + libjxl build BEFORE vips
     # (highway, lcms2, and libpng are all built by posix.sh before this point)
@@ -64,7 +62,7 @@ case ${PLATFORM} in
     rm -f "${BUILD_FILE}.bak"
 
     # Validate
-    # grep -q 'jpeg-xl=enabled' "$BUILD_FILE" || exit 1
-    # grep -q 'openjpeg=enabled' "$BUILD_FILE" || exit 1
+    grep -q 'jpeg-xl=enabled' "$BUILD_FILE" || exit 1
+    grep -q 'openjpeg=enabled' "$BUILD_FILE" || exit 1
     ;;
 esac
