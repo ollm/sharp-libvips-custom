@@ -3,33 +3,66 @@ set -e
 
 PLATFORM=$1
 
-# Exit if it has already been applied 
-grep -q "jpeg-xl=enabled" $BUILD_FILE || exit 0
-grep -q "openjpeg=enabled" $BUILD_FILE || exit 0
+# Append custom version numbers to the upstream versions.properties
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cat "${SCRIPT_DIR}/versions.properties" >> ./versions.properties
 
-# Linux
-BUILD_FILE="build/posix.sh"
+# Platform-specific patching
+case ${PLATFORM} in
+  win32*)
+    BUILD_FILE="build/win.sh"
 
-# JXL and JX2
-sed -i 's/-Djpeg-xl=disabled/-Djpeg-xl=enabled/' $BUILD_FILE
-sed -i 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' $BUILD_FILE
+    # Exit early if already patched (already using 'all' build)
+    grep -q '\-web-' "$BUILD_FILE" || exit 0
 
-# HEIF
-sed -i 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' $BUILD_FILE
+    # Switch from 'web-*-static' to 'all' build variant which includes JXL and HEIC
+    # Captures the version variable to preserve it: -web-${VERSION_VIPS}-static → -all-${VERSION_VIPS}
+    sed -i.bak 's/-web-\(.*\)-static/-all-\1/' "$BUILD_FILE"
+    rm -f "${BUILD_FILE}.bak"
 
-# Inject extra build
-awk '
-/mkdir \$\{DEPS\}\/vips/ {
-  print "bash ./build-extra-deps.sh"
-}
-{ print }
-' $BUILD_FILE > tmp && mv tmp $BUILD_FILE
+    # Validate
+    grep -q '\-all-' "$BUILD_FILE" || exit 1
+    ;;
+  *)
+    # Linux and macOS: patch posix.sh
+    BUILD_FILE="build/posix.sh"
 
-chmod +x $BUILD_FILE
+    # Exit early if already patched
+    grep -q 'jpeg-xl=disabled' "$BUILD_FILE" || exit 0
 
-# Inject versions
-cat ./versions.properties >> ../versions.properties
+    # Enable JXL in vips meson build
+    sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=enabled/' "$BUILD_FILE"
 
-# Validate
-grep -q "jpeg-xl=enabled" $BUILD_FILE || exit 1
-grep -q "openjpeg=enabled" $BUILD_FILE || exit 1
+    # Enable openjpeg (JP2) in vips meson build
+    sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
+
+    # Enable DAV1D decoder in libheif cmake build (for HEIC AV1 support)
+    sed -i.bak 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' "$BUILD_FILE"
+
+    # Inject dav1d build BEFORE heif (dav1d is required by libheif for HEIC/AV1)
+    # NOTE: ${PACKAGE} is written literally here; posix.sh expands it at runtime
+    awk '
+    /mkdir \$\{DEPS\}\/heif/ {
+      print "bash ${PACKAGE}/custom/build-extra-deps.sh pre-heif"
+    }
+    { print }
+    ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+
+    # Inject brotli + openjpeg + libjxl build BEFORE vips
+    # (highway, lcms2, and libpng are all built by posix.sh before this point)
+    # NOTE: ${PACKAGE} is written literally here; posix.sh expands it at runtime
+    awk '
+    /mkdir \$\{DEPS\}\/vips/ {
+      print "bash ${PACKAGE}/custom/build-extra-deps.sh pre-vips"
+    }
+    { print }
+    ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+
+    chmod +x "$BUILD_FILE"
+    rm -f "${BUILD_FILE}.bak"
+
+    # Validate
+    grep -q 'jpeg-xl=enabled' "$BUILD_FILE" || exit 1
+    grep -q 'openjpeg=enabled' "$BUILD_FILE" || exit 1
+    ;;
+esac
