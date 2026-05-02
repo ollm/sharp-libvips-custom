@@ -56,16 +56,16 @@ CURL="curl --silent --location --retry 3 --retry-max-time 30 --fail"
 # -----------------------------
 if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
 
-  # brotli (required by libjxl)
-  mkdir "${DEPS}/brotli"
-  $CURL https://github.com/google/brotli/archive/v${VERSION_BROTLI}.tar.gz | tar xzC "${DEPS}/brotli" --strip-components=1
-  cd "${DEPS}/brotli"
-  cmake -G"Unix Makefiles" \
-    -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
-    -DBUILD_SHARED_LIBS=FALSE \
-    -DBROTLI_DISABLE_TESTS=ON \
-    .
-  make install/strip
+  # brotli temporarily disabled due to download failures; libjxl uses its own bundled brotli
+  # mkdir "${DEPS}/brotli"
+  # $CURL https://github.com/google/brotli/archive/v${VERSION_BROTLI}.tar.gz | tar xzC "${DEPS}/brotli" --strip-components=1
+  # cd "${DEPS}/brotli"
+  # cmake -G"Unix Makefiles" \
+  #   -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
+  #   -DBUILD_SHARED_LIBS=FALSE \
+  #   -DBROTLI_DISABLE_TESTS=ON \
+  #   .
+  # make install/strip
 
   # openjpeg (JPEG 2000 / JP2 support)
   mkdir "${DEPS}/openjpeg"
@@ -97,7 +97,7 @@ if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
     -DJPEGXL_ENABLE_OPENEXR=OFF \
     -DJPEGXL_ENABLE_SKCMS=OFF \
     -DJPEGXL_ENABLE_TRANSCODE_JPEG=OFF \
-    -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
+    -DJPEGXL_FORCE_SYSTEM_BROTLI=OFF \
     -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
     -DJPEGXL_FORCE_SYSTEM_HWY=ON \
     .
