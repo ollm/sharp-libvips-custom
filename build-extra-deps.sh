@@ -5,8 +5,8 @@ set -e
 STEP="${1:-all}"
 
 # Resolve the workspace root from the script's location, regardless of the
-# caller's working directory (posix.sh may cd into a build subdirectory before
-# calling this script, making $PWD unreliable on macOS).
+# caller's working directory (posix.sh cds into build subdirectories before
+# calling this script, making $PWD unreliable).
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
