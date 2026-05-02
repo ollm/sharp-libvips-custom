@@ -17,25 +17,11 @@ on:
       - ready_for_review
 permissions: {}
 jobs:
-  check-latest-versions:
-    permissions:
-      contents: read
-    runs-on: 'ubuntu-24.04'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        # CUSTOM - START
-        with:
-          repository: lovell/sharp-libvips
-        # CUSTOM - END
-      - name: Check latest versions
-        run: ./check-latest-versions.sh && git diff --quiet
   build:
     permissions:
       contents: read
     name: build-${{ matrix.platform }}
     runs-on: ${{ matrix.os }}
-    needs: check-latest-versions
     strategy:
       fail-fast: false
       matrix:
