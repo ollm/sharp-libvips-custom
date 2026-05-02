@@ -31,10 +31,10 @@ case ${PLATFORM} in
     grep -q 'jpeg-xl=disabled' "$BUILD_FILE" || exit 0
 
     # Enable JXL in vips meson build
-    sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=enabled/' "$BUILD_FILE"
+    #sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=enabled/' "$BUILD_FILE"
 
     # Enable openjpeg (JP2) in vips meson build
-    sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
+    #sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
 
     # Enable DAV1D decoder in libheif cmake build (for HEIC AV1 support)
     # Temporarily disabled to diagnose CI failures
@@ -64,7 +64,7 @@ case ${PLATFORM} in
     rm -f "${BUILD_FILE}.bak"
 
     # Validate
-    grep -q 'jpeg-xl=enabled' "$BUILD_FILE" || exit 1
-    grep -q 'openjpeg=enabled' "$BUILD_FILE" || exit 1
+    # grep -q 'jpeg-xl=enabled' "$BUILD_FILE" || exit 1
+    # grep -q 'openjpeg=enabled' "$BUILD_FILE" || exit 1
     ;;
 esac
