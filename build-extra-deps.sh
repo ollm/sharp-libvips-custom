@@ -39,15 +39,16 @@ CURL="curl --silent --location --retry 3 --retry-max-time 30 --fail"
 # pre-heif: dav1d
 # AV1 decoder required by libheif for HEIC decoding
 # -----------------------------
-if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
-  mkdir "${DEPS}/dav1d"
-  $CURL https://github.com/videolan/dav1d/archive/${VERSION_DAV1D}.tar.gz | tar xzC "${DEPS}/dav1d" --strip-components=1
-  cd "${DEPS}/dav1d"
-  meson setup _build --default-library=static --buildtype=release --strip --prefix=${TARGET} ${MESON} \
-    -Denable_tools=false \
-    -Denable_tests=false
-  meson install -C _build --tag devel
-fi
+# dav1d temporarily disabled to diagnose CI failures
+# if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
+#   mkdir "${DEPS}/dav1d"
+#   $CURL https://github.com/videolan/dav1d/archive/${VERSION_DAV1D}.tar.gz | tar xzC "${DEPS}/dav1d" --strip-components=1
+#   cd "${DEPS}/dav1d"
+#   meson setup _build --default-library=static --buildtype=release --strip --prefix=${TARGET} ${MESON} \
+#     -Denable_tools=false \
+#     -Denable_tests=false
+#   meson install -C _build --tag devel
+# fi
 
 # -----------------------------
 # pre-vips: brotli, openjpeg, libjxl
