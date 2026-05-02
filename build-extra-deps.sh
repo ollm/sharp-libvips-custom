@@ -56,6 +56,8 @@ CURL="curl --silent --location --retry 3 --retry-max-time 30 --fail"
 # -----------------------------
 if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
 
+  echo "Build Extra Deps - Start"
+
   # brotli temporarily disabled due to download failures; libjxl uses its own bundled brotli
   # mkdir "${DEPS}/brotli"
   # $CURL https://github.com/google/brotli/archive/v${VERSION_BROTLI}.tar.gz | tar xzC "${DEPS}/brotli" --strip-components=1
@@ -79,29 +81,31 @@ if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
   #  .
   #make install/strip
 
+  echo "JXL: https://github.com/libjxl/libjxl/archive/v${VERSION_JXL}.tar.gz"
+
   # libjxl (JPEG XL support)
   # Depends on: highway (system), lcms2 (system), libpng (system), brotli (system - built above)
-  #mkdir "${DEPS}/jxl"
-  #$CURL https://github.com/libjxl/libjxl/archive/v${VERSION_JXL}.tar.gz | tar xzC "${DEPS}/jxl" --strip-components=1
-  #cd "${DEPS}/jxl"
-  #CFLAGS="${CFLAGS} -O3" CXXFLAGS="${CXXFLAGS} -O3" cmake -G"Unix Makefiles" \
-  #  -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
-  #  -DBUILD_SHARED_LIBS=FALSE \
-  #  -DBUILD_TESTING=OFF \
-  #  -DJPEGXL_ENABLE_TOOLS=OFF \
-  #  -DJPEGXL_ENABLE_DOXYGEN=OFF \
-  #  -DJPEGXL_ENABLE_MANPAGES=OFF \
-  #  -DJPEGXL_ENABLE_BENCHMARK=OFF \
-  #  -DJPEGXL_ENABLE_EXAMPLES=OFF \
-  #  -DJPEGXL_ENABLE_SJPEG=OFF \
-  #  -DJPEGXL_ENABLE_OPENEXR=OFF \
-  #  -DJPEGXL_ENABLE_SKCMS=OFF \
-  #  -DJPEGXL_ENABLE_TRANSCODE_JPEG=OFF \
-  #  -DJPEGXL_FORCE_SYSTEM_BROTLI=OFF \
-  #  -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
-  #  -DJPEGXL_FORCE_SYSTEM_HWY=ON \
-  #  .
-  #make install/strip
-  echo ""
+  mkdir ${DEPS}/jxl
+  $CURL https://github.com/libjxl/libjxl/archive/v${VERSION_JXL}.tar.gz | tar xzC ${DEPS}/jxl --strip-components=1
+  cd ${DEPS}/jxl
+  CFLAGS="${CFLAGS} -O3" CXXFLAGS="${CXXFLAGS} -O3" cmake -G"Unix Makefiles" \
+    -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
+    -DBUILD_SHARED_LIBS=FALSE \
+    -DBUILD_TESTING=OFF \
+    -DJPEGXL_ENABLE_TOOLS=OFF \
+    -DJPEGXL_ENABLE_DOXYGEN=OFF \
+    -DJPEGXL_ENABLE_MANPAGES=OFF \
+    -DJPEGXL_ENABLE_BENCHMARK=OFF \
+    -DJPEGXL_ENABLE_EXAMPLES=OFF \
+    -DJPEGXL_ENABLE_SJPEG=OFF \
+    -DJPEGXL_ENABLE_OPENEXR=OFF \
+    -DJPEGXL_ENABLE_SKCMS=OFF \
+    -DJPEGXL_ENABLE_TRANSCODE_JPEG=OFF \
+    -DJPEGXL_FORCE_SYSTEM_BROTLI=OFF \
+    -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
+    -DJPEGXL_FORCE_SYSTEM_HWY=ON \
+    .
+  make install/strip
+  echo "Build Extra Deps - End"
 
 fi
