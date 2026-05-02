@@ -4,11 +4,17 @@ set -e
 # Step to execute: 'pre-heif' builds dav1d, 'pre-vips' builds brotli+openjpeg+libjxl
 STEP="${1:-all}"
 
+# Resolve the workspace root from the script's location, regardless of the
+# caller's working directory (posix.sh may cd into a build subdirectory before
+# calling this script, making $PWD unreliable on macOS).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
 # Dependency version numbers
 if [ -f /packaging/versions.properties ]; then
   source /packaging/versions.properties
-elif [ -f "$PWD/versions.properties" ]; then
-  source "$PWD/versions.properties"
+elif [ -f "${WORKSPACE_ROOT}/versions.properties" ]; then
+  source "${WORKSPACE_ROOT}/versions.properties"
 fi
 
 # Environment / working directories (mirrors posix.sh)
@@ -20,10 +26,10 @@ case ${PLATFORM} in
     ROOT=/root
     ;;
   darwin*)
-    DEPS=$PWD/deps
-    TARGET=$PWD/target
-    PACKAGE=$PWD
-    ROOT=$PWD/platforms/$PLATFORM
+    DEPS=$WORKSPACE_ROOT/deps
+    TARGET=$WORKSPACE_ROOT/target
+    PACKAGE=$WORKSPACE_ROOT
+    ROOT=$WORKSPACE_ROOT/platforms/$PLATFORM
     ;;
 esac
 
