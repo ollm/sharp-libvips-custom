@@ -4,11 +4,17 @@ set -e
 # Step to execute: 'pre-heif' builds dav1d, 'pre-vips' builds brotli+openjpeg+libjxl
 STEP="${1:-all}"
 
+# Resolve the workspace root from the script's location, regardless of the
+# caller's working directory (posix.sh cds into build subdirectories before
+# calling this script, making $PWD unreliable).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
 # Dependency version numbers
 if [ -f /packaging/versions.properties ]; then
   source /packaging/versions.properties
-elif [ -f "$PWD/versions.properties" ]; then
-  source "$PWD/versions.properties"
+elif [ -f "${WORKSPACE_ROOT}/versions.properties" ]; then
+  source "${WORKSPACE_ROOT}/versions.properties"
 fi
 
 # Environment / working directories (mirrors posix.sh)
@@ -20,14 +26,14 @@ case ${PLATFORM} in
     ROOT=/root
     ;;
   darwin*)
-    DEPS=$PWD/deps
-    TARGET=$PWD/target
-    PACKAGE=$PWD
-    ROOT=$PWD/platforms/$PLATFORM
+    DEPS=$WORKSPACE_ROOT/deps
+    TARGET=$WORKSPACE_ROOT/target
+    PACKAGE=$WORKSPACE_ROOT
+    ROOT=$WORKSPACE_ROOT/platforms/$PLATFORM
     ;;
 esac
 
-CURL="curl --silent --location --retry 3 --retry-max-time 30"
+CURL="curl --silent --location --retry 3 --retry-max-time 30 --fail"
 
 # -----------------------------
 # pre-heif: dav1d
@@ -35,7 +41,7 @@ CURL="curl --silent --location --retry 3 --retry-max-time 30"
 # -----------------------------
 if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
   mkdir "${DEPS}/dav1d"
-  $CURL https://github.com/videolan/dav1d/archive/refs/tags/${VERSION_DAV1D}.tar.gz | tar xzC "${DEPS}/dav1d" --strip-components=1
+  $CURL https://github.com/videolan/dav1d/archive/${VERSION_DAV1D}.tar.gz | tar xzC "${DEPS}/dav1d" --strip-components=1
   cd "${DEPS}/dav1d"
   meson setup _build --default-library=static --buildtype=release --strip --prefix=${TARGET} ${MESON} \
     -Denable_tools=false \
