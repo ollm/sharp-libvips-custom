@@ -33,7 +33,7 @@ case ${PLATFORM} in
     ;;
 esac
 
-CURL="curl --silent --location --retry 3 --retry-max-time 30"
+CURL="curl --silent --location --retry 3 --retry-max-time 30 --fail"
 
 # -----------------------------
 # pre-heif: dav1d
@@ -41,7 +41,7 @@ CURL="curl --silent --location --retry 3 --retry-max-time 30"
 # -----------------------------
 if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
   mkdir "${DEPS}/dav1d"
-  $CURL https://github.com/videolan/dav1d/archive/refs/tags/${VERSION_DAV1D}.tar.gz | tar xzC "${DEPS}/dav1d" --strip-components=1
+  $CURL https://github.com/videolan/dav1d/archive/${VERSION_DAV1D}.tar.gz | tar xzC "${DEPS}/dav1d" --strip-components=1
   cd "${DEPS}/dav1d"
   meson setup _build --default-library=static --buildtype=release --strip --prefix=${TARGET} ${MESON} \
     -Denable_tools=false \
