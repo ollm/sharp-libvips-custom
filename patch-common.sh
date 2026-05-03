@@ -5,7 +5,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cat "${SCRIPT_DIR}/versions.properties" >> ./versions.properties
 
-# Replace @img/ with @img-custom/ in .json and .js only
+# Replace @img/sharp with @img-custom/sharp in .json and .js only
 find . \
   \( -path './.git' -o -path '*/.git/*' \) -prune -o \
   -type f \( -name '*.json' -o -name '*.js' \) \
