@@ -3,9 +3,9 @@ set -e
 
 PLATFORM=$1
 
-# Include shared path-common.sh for shared patching logic
+# Include shared patch-common.sh for shared patching logic
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/path-common.sh"
+source "${SCRIPT_DIR}/patch-common.sh"
 
 # Platform-specific patching
 case ${PLATFORM} in
