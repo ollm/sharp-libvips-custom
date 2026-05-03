@@ -63,7 +63,7 @@ case ${PLATFORM} in
     rm -f "${BUILD_FILE}.bak"
 
     # Validate
-    grep -q 'jpeg-xl=' "$BUILD_FILE" || exit 1
+    grep -q 'jpeg-xl=\$(' "$BUILD_FILE" || exit 1
     grep -q 'openjpeg=enabled' "$BUILD_FILE" || exit 1
     ;;
 esac
