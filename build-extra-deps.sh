@@ -96,4 +96,9 @@ if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
     .
   make install/strip
 
+  # Fix pkg-config files that incorrectly contain -l-lpthread (double -l prefix).
+  # This happens when cmake-generated .pc files embed Threads::Threads as a raw
+  # -lpthread flag in Libs:, and meson then prepends its own -l, producing -l-lpthread.
+  find ${TARGET}/lib/pkgconfig -name "*.pc" -exec sed -i 's/-l-lpthread/-lpthread/g' {} \;
+
 fi
