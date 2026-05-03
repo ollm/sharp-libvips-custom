@@ -7,6 +7,13 @@ PLATFORM=$1
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cat "${SCRIPT_DIR}/versions.properties" >> ./versions.properties
 
+# Replace @img/ with @img-custom/ in .json and .js only
+find . \
+  -path './.git' -prune -o \
+  -type f \( -name '*.json' -o -name '*.js' \) \
+  ! -name '*.bak' \
+  -exec sed -i.bak 's/@img\//@img-custom\//g' {} +
+
 # Platform-specific patching
 case ${PLATFORM} in
   win32*)
