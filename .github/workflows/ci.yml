@@ -62,7 +62,7 @@ jobs:
           repository: lovell/sharp-libvips
       # CUSTOM - END
       # CUSTOM - START
-      - name: Checkout custom build layer
+      - name: Checkout custom repository
         uses: actions/checkout@v6
         with:
           path: custom
@@ -103,7 +103,7 @@ jobs:
           repository: lovell/sharp-libvips
       # CUSTOM - END
       # CUSTOM - START
-      - name: Checkout custom build layer
+      - name: Checkout custom repository
         uses: actions/checkout@v6
         with:
           path: custom
