@@ -30,8 +30,9 @@ case ${PLATFORM} in
     # Exit early if already patched
     grep -q 'jpeg-xl=disabled' "$BUILD_FILE" || exit 0
 
-    # Enable JXL in vips meson build
-    sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=enabled/' "$BUILD_FILE"
+    # Enable JXL in vips meson build on platforms that have highway;
+    # on platforms where WITHOUT_HIGHWAY is set, keep JXL disabled at runtime.
+    sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=$([ -z "${WITHOUT_HIGHWAY}" ] \&\& echo enabled || echo disabled)/' "$BUILD_FILE"
 
     # Enable openjpeg (JP2) in vips meson build
     sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
@@ -62,7 +63,7 @@ case ${PLATFORM} in
     rm -f "${BUILD_FILE}.bak"
 
     # Validate
-    grep -q 'jpeg-xl=enabled' "$BUILD_FILE" || exit 1
+    grep -q 'jpeg-xl=\$(' "$BUILD_FILE" || exit 1
     grep -q 'openjpeg=enabled' "$BUILD_FILE" || exit 1
     ;;
 esac
