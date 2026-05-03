@@ -4,14 +4,20 @@ set -e
 # Step to execute: 'pre-heif' builds dav1d, 'pre-vips' builds brotli+openjpeg+libjxl
 STEP="${1:-all}"
 
+# Resolve the script's own directory so all paths are absolute and independent
+# of the current working directory when this script is invoked.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Dependency version numbers
 if [ -f /packaging/versions.properties ]; then
   source /packaging/versions.properties
-elif [ -f "$PWD/versions.properties" ]; then
-  source "$PWD/versions.properties"
+elif [ -f "${SCRIPT_DIR}/versions.properties" ]; then
+  source "${SCRIPT_DIR}/versions.properties"
 fi
 
 # Environment / working directories (mirrors posix.sh)
+# Use SCRIPT_DIR to derive absolute paths so this script works correctly
+# regardless of the current working directory when it is invoked.
 case ${PLATFORM} in
   linux*)
     DEPS=/deps
@@ -20,10 +26,11 @@ case ${PLATFORM} in
     ROOT=/root
     ;;
   darwin*)
-    DEPS=$PWD/deps
-    TARGET=$PWD/target
-    PACKAGE=$PWD
-    ROOT=$PWD/platforms/$PLATFORM
+    PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+    DEPS=${PROJECT_ROOT}/deps
+    TARGET=${PROJECT_ROOT}/target
+    PACKAGE=${PROJECT_ROOT}
+    ROOT=${PROJECT_ROOT}/platforms/$PLATFORM
     ;;
 esac
 
