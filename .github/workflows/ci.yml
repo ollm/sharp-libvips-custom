@@ -102,6 +102,15 @@ jobs:
         with:
           repository: lovell/sharp-libvips
       # CUSTOM - END
+      # CUSTOM - START
+      - name: Checkout custom build layer
+        uses: actions/checkout@v6
+        with:
+          path: custom
+      - name: Apply custom libvips extensions
+        run: |
+          bash ./custom/patch-build.sh
+      # CUSTOM - END
       - name: Download build artifacts
         uses: actions/download-artifact@v7
         with:
