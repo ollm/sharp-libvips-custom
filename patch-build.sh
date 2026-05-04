@@ -38,7 +38,10 @@ case ${PLATFORM} in
     # Enable openjpeg (JP2) in vips meson build
     sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
 
-    # Enable DAV1D decoder in libheif cmake build (for HEIC AV1 support)
+    # Enable libde265 HEVC decoder in libheif cmake build (flip existing flag)
+    sed -i.bak 's/-DWITH_LIBDE265=0/-DWITH_LIBDE265=1/' "$BUILD_FILE"
+
+    # Enable DAV1D AV1 decoder in libheif cmake build
     sed -i.bak 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' "$BUILD_FILE"
 
     # Enable high bit depth in dav1d

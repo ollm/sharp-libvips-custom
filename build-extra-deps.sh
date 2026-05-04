@@ -48,6 +48,20 @@ if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
     -Denable_tools=false \
     -Denable_tests=false
   meson install -C _build --tag devel
+
+  # libde265 (HEVC/H.265 decoder required by libheif for HEIC decoding)
+  mkdir ${DEPS}/de265
+  $CURL https://github.com/strukturag/libde265/releases/download/v${VERSION_DE265}/libde265-${VERSION_DE265}.tar.gz | tar xzC ${DEPS}/de265 --strip-components=1
+  cd ${DEPS}/de265
+  cmake -G"Unix Makefiles" \
+    -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
+    -DBUILD_SHARED_LIBS=FALSE \
+    -DENABLE_DECODER=ON \
+    -DENABLE_ENCODER=OFF \
+    -DENABLE_SDL=OFF \
+    -DENABLE_TESTS=OFF \
+    .
+  make install/strip
 fi
 
 # -----------------------------
