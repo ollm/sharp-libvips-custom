@@ -41,6 +41,9 @@ case ${PLATFORM} in
     # Enable DAV1D decoder in libheif cmake build (for HEIC AV1 support)
     sed -i.bak 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' "$BUILD_FILE"
 
+    # Enable high bit depth in dav1d
+    sed -i.bak 's/-DCONFIG_AV1_HIGHBITDEPTH=0/-DCONFIG_AV1_HIGHBITDEPTH=1/' "$BUILD_FILE"
+
     # Inject dav1d build BEFORE heif (dav1d is required by libheif for HEIC/AV1)
     # NOTE: ${PACKAGE} is written literally here; posix.sh expands it at runtime
     awk '
