@@ -56,10 +56,9 @@ if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
   cmake -G"Unix Makefiles" \
     -DCMAKE_TOOLCHAIN_FILE=${ROOT}/Toolchain.cmake -DCMAKE_INSTALL_PREFIX=${TARGET} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=MinSizeRel \
     -DBUILD_SHARED_LIBS=FALSE \
-    -DENABLE_DECODER=ON \
+    -DENABLE_DECODER=OFF \
     -DENABLE_ENCODER=OFF \
     -DENABLE_SDL=OFF \
-    -DENABLE_TESTS=OFF \
     .
   make install/strip
 fi
