@@ -1,4 +1,6 @@
 name: CI
+env:
+  SHARP_LIBVIPS_TAG: v1.2.3
 on:
   workflow_dispatch:
   push:
@@ -60,6 +62,7 @@ jobs:
       # CUSTOM - START
         with:
           repository: lovell/sharp-libvips
+          ref: ${{ env.SHARP_LIBVIPS_TAG }}
       # CUSTOM - END
       # CUSTOM - START
       - name: Checkout custom repository
@@ -101,6 +104,7 @@ jobs:
       # CUSTOM - START
         with:
           repository: lovell/sharp-libvips
+          ref: ${{ env.SHARP_LIBVIPS_TAG }}
       # CUSTOM - END
       # CUSTOM - START
       - name: Checkout custom repository
