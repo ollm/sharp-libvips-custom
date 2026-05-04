@@ -31,6 +31,9 @@ case ${PLATFORM} in
     # Exit early if already patched
     grep -q 'jpeg-xl=disabled' "$BUILD_FILE" || exit 0
 
+    # Remplace curl retry flags with more robust settings (retry-delay and longer max-time)
+    sed -i.bak 's|--retry 3 --retry-max-time 30|--retry 3 --retry-delay 2 --retry-max-time 60|g' "$BUILD_FILE"
+
     # Enable JXL in vips meson build on platforms that have highway;
     # on platforms where WITHOUT_HIGHWAY is set, keep JXL disabled at runtime.
     sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=$([ -z "${WITHOUT_HIGHWAY}" ] \&\& echo enabled || echo disabled)/' "$BUILD_FILE"

@@ -8,7 +8,7 @@ cat "${SCRIPT_DIR}/versions.properties" >> ./versions.properties
 # Replace @img/sharp with @img-custom/sharp in .json and .js only
 find . \
   \( -path './.git' -o -path '*/.git/*' \) -prune -o \
-  -type f \( -name '*.json' -o -name '*.js' \) \
+  -type f \( -name '*.json' -o -name '*.js' -o -name '*.cjs' -o -name '*.mjs' \) \
   ! -name '*.bak' \
   -exec sed -i.bak 's|@img/sharp-|@img-custom/sharp-|g' {} +
 
@@ -24,4 +24,4 @@ find . \
   \( -path './.git' -o -path '*/.git/*' \) -prune -o \
   -type f -name '*.json' \
   ! -name '*.bak' \
-  -exec sed -i.bak 's|"1.3.0-rc.6"|"0.0.9"|g' {} +
+  -exec sed -i.bak 's|"1.3.0-rc.6"|"0.0.11"|g' {} +
