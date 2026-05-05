@@ -33,7 +33,7 @@ case ${PLATFORM} in
     grep -q 'jpeg-xl=disabled' "$BUILD_FILE" || exit 0
 
     # Remplace curl retry flags
-    sed -i.bak 's|--retry 3 --retry-max-time 30|--retry 3 --retry-delay 2 --retry-max-time 60|g' "$BUILD_FILE"
+    sed -i.bak 's/--retry 3 --retry-max-time 30/--fail --show-error --retry 3 --retry-delay 2 --retry-max-time 60/g' "$BUILD_FILE"
 
     # Enable JXL
     sed -i.bak 's/-Djpeg-xl=disabled/-Djpeg-xl=$([ -z "${WITHOUT_HIGHWAY}" ] \&\& echo enabled || echo disabled)/' "$BUILD_FILE"
