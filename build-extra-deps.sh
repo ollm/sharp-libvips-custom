@@ -1,23 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-# Step to execute: 'pre-heif' builds dav1d, 'pre-vips' builds brotli+openjpeg+libjxl
 STEP="${1:-all}"
-
-# Resolve the script's own directory so all paths are absolute and independent
-# of the current working directory when this script is invoked.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Dependency version numbers
+# Versions
 if [ -f /packaging/versions.properties ]; then
   source /packaging/versions.properties
 elif [ -f "${SCRIPT_DIR}/versions.properties" ]; then
   source "${SCRIPT_DIR}/versions.properties"
 fi
 
-# Environment / working directories (mirrors posix.sh)
-# Use SCRIPT_DIR to derive absolute paths so this script works correctly
-# regardless of the current working directory when it is invoked.
+# Paths
 case ${PLATFORM} in
   linux*)
     DEPS=/deps
@@ -36,11 +30,10 @@ esac
 
 CURL="curl --silent --location --retry 3 --retry-max-time 30 --fail"
 
-# -----------------------------
-# pre-heif: dav1d
-# AV1 decoder required by libheif for HEIC decoding
-# -----------------------------
+# pre-heif
 if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
+
+  # dav1d (AV1 decoder required by libheif for AVIF/HEIC decoding)
   mkdir ${DEPS}/dav1d
   $CURL https://github.com/videolan/dav1d/archive/${VERSION_DAV1D}.tar.gz | tar xzC ${DEPS}/dav1d --strip-components=1
   cd ${DEPS}/dav1d
@@ -63,10 +56,7 @@ if [ "$STEP" = "pre-heif" ] || [ "$STEP" = "all" ]; then
   make install/strip
 fi
 
-# -----------------------------
-# pre-vips: brotli, openjpeg, libjxl
-# All built after highway, lcms2, and libpng are already installed by posix.sh
-# -----------------------------
+# pre-vips
 if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
 
   # brotli (required by libjxl)
@@ -93,8 +83,6 @@ if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
   make install/strip
 
   # libjxl (JPEG XL support)
-  # Depends on: highway (system), lcms2 (system), libpng (system), brotli (system - built above)
-  # Skipped on platforms that do not build highway (WITHOUT_HIGHWAY is set).
   if [ -z "$WITHOUT_HIGHWAY" ]; then
     mkdir ${DEPS}/jxl
     $CURL https://github.com/libjxl/libjxl/archive/v${VERSION_JXL}.tar.gz | tar xzC ${DEPS}/jxl --strip-components=1
@@ -114,14 +102,9 @@ if [ "$STEP" = "pre-vips" ] || [ "$STEP" = "all" ]; then
       -DJPEGXL_ENABLE_TRANSCODE_JPEG=OFF \
       -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
       -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
-      -DJPEGXL_FORCE_SYSTEM_HWY=ON \
-      .
+      -DJPEGXL_FORCE_SYSTEM_HWY=ON .
     make install/strip
   fi
 
-  # Fix pkg-config files that incorrectly contain -l-lpthread (double -l prefix).
-  # This happens when cmake-generated .pc files embed Threads::Threads as a raw
-  # -lpthread flag in Libs:, and meson then prepends its own -l, producing -l-lpthread.
   find ${TARGET}/lib/pkgconfig -name "*.pc" -exec sed -i 's/-l-lpthread/-lpthread/g' {} \;
-
 fi
