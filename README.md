@@ -1,6 +1,6 @@
 # Custom Sharp Build
 
-`sharp-custom` and `sharp-libvips-custom` (`@img-custom`) are prebuilt Sharp binaries with built-in support for `HEIF/HEIC`, `JP2`, and `JXL` (WASM builds are not available).
+`sharp-custom` and `sharp-libvips-custom` (`@img-custom`) are prebuilt Sharp binaries with built-in support for `JXL` and `JP2` (WASM builds are not available).
 
 > `JXL` is not available on `linux-s390x`, `linux-riscv64`, and `linux-armv6` due to lack of Highway SIMD support.
 

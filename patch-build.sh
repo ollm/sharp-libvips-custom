@@ -42,7 +42,7 @@ case ${PLATFORM} in
     sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
 
     # Enable libde265 HEVC decoder
-    sed -i.bak 's/-DWITH_LIBDE265=0/-DWITH_LIBDE265=1/' "$BUILD_FILE"
+    #sed -i.bak 's/-DWITH_LIBDE265=0/-DWITH_LIBDE265=1/' "$BUILD_FILE"
 
     # Enable DAV1D AV1 decoder
     sed -i.bak 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' "$BUILD_FILE"
