@@ -39,4 +39,4 @@ find . \
   \( -path './.git' -o -path '*/.git/*' \) -prune -o \
   -type f -name '*.json' \
   ! -name '*.bak' \
-  -exec sed -i.bak 's|"1.3.0-rc.[0-9]+"|"1.3.0-rc.6-2"|g' {} +
+  -exec sed -i.bak 's|"1.3.0-rc.6"|"1.3.0-rc.6-2"|g' {} +
