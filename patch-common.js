@@ -60,7 +60,7 @@ done`,
 		replace: `TAR_ARGS=(
   include
   lib/glib-2.0
-  lib/libvips.lib
+  lib/*.lib
   lib/*.dll
   *.json
   THIRD-PARTY-NOTICES.md
