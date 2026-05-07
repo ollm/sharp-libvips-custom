@@ -22,7 +22,7 @@ case ${PLATFORM} in
     sed -i.bak 's|lib/libvips.lib|lib/*.lib|' "$BUILD_FILE"
     rm -f "${BUILD_FILE}.bak"
 
-    node ./patch-common.js "${BUILD_FILE}"
+    node custom/patch-common.js "${BUILD_FILE}"
 
     # Validate
     grep -q '\-all-' "$BUILD_FILE" || exit 1
