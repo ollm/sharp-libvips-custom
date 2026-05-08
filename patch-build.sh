@@ -18,11 +18,17 @@ case ${PLATFORM} in
 
     # Switch from 'web-*-static' to 'all' build variant which includes JXL, HEIC and JP2
     # Captures the version variable to preserve it: -web-${VERSION_VIPS}-static → -all-${VERSION_VIPS}
-    sed -i.bak 's/-web-\(.*\)-static/-all-\1/' "$BUILD_FILE"
+    # sed -i.bak 's/-web-\(.*\)-static/-all-\1/' "$BUILD_FILE"
+    sed -i.bak 's/-web-\(.*\)-static/-all-17ad2f6/' "$BUILD_FILE"
+    sed -i.bak 's|libvips/build-win64-mxe|ollm/build-win64-mxe-custom|' "$BUILD_FILE"
     sed -i.bak 's|lib/libvips.lib|lib/*.lib|' "$BUILD_FILE"
+
+    # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-2
+    sed -i.bak 's/v${VERSION_VIPS}/v${VERSION_VIPS}-2/' "$BUILD_FILE"
+
     rm -f "${BUILD_FILE}.bak"
 
-    node custom/patch-common.js "${BUILD_FILE}"
+    # node custom/patch-common.js "${BUILD_FILE}"
 
     # Validate
     grep -q '\-all-' "$BUILD_FILE" || exit 1
