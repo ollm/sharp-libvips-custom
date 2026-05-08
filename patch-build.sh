@@ -12,6 +12,7 @@ case ${PLATFORM} in
   win32*)
     # Windows
     BUILD_FILE="build/win.sh"
+    HASH="17ad2f6"
 
     # Exit early if already patched
     grep -q '\-web-' "$BUILD_FILE" || exit 0
@@ -19,10 +20,10 @@ case ${PLATFORM} in
     # Switch from 'web-*-static' to 'all' build variant which includes JXL, HEIC and JP2
     # Captures the version variable to preserve it: -web-${VERSION_VIPS}-static → -all-${VERSION_VIPS}
     # sed -i.bak 's/-web-\(.*\)-static/-all-\1/' "$BUILD_FILE"
-    sed -i.bak 's/-web-\(.*\)-static/-all-17ad2f6/' "$BUILD_FILE"
+    sed -i.bak "s/-web-\(.*\)-static/-all-${HASH}/" "$BUILD_FILE"
     sed -i.bak 's|libvips/build-win64-mxe|ollm/build-win64-mxe-custom|' "$BUILD_FILE"
     sed -i.bak 's|lib/libvips.lib|lib/*.lib|' "$BUILD_FILE"
-    sed -i.bak 's|\$\{VERSION_VIPS_SHORT\}|17ad2f6|g' "$BUILD_FILE"
+    sed -i.bak "s|\${VERSION_VIPS_SHORT}|${HASH}|g" "$BUILD_FILE"
 
     # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-2
     sed -i.bak 's/v${VERSION_VIPS}/v${VERSION_VIPS}-2/' "$BUILD_FILE"
