@@ -22,6 +22,7 @@ case ${PLATFORM} in
     sed -i.bak 's/-web-\(.*\)-static/-all-17ad2f6/' "$BUILD_FILE"
     sed -i.bak 's|libvips/build-win64-mxe|ollm/build-win64-mxe-custom|' "$BUILD_FILE"
     sed -i.bak 's|lib/libvips.lib|lib/*.lib|' "$BUILD_FILE"
+    sed -i.bak 's|\$\{VERSION_VIPS_SHORT\}|17ad2f6|g' "$BUILD_FILE"
 
     # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-2
     sed -i.bak 's/v${VERSION_VIPS}/v${VERSION_VIPS}-2/' "$BUILD_FILE"
