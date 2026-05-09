@@ -30,8 +30,6 @@ case ${PLATFORM} in
 
     rm -f "${BUILD_FILE}.bak"
 
-    # node custom/patch-common.js "${BUILD_FILE}"
-
     # Validate
     grep -q '\-all-' "$BUILD_FILE" || exit 1
     ;;
