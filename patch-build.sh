@@ -15,20 +15,20 @@ case ${PLATFORM} in
     HASH="17ad2f6"
 
     # Exit early if already patched
-    grep -q '\-web-' "$BUILD_FILE" || exit 0
-
-    # Switch from 'libvips/build-win64-mxe' to 'ollm/build-win64-mxe-custom'
-    sed -i.bak "s/-web-\(.*\)-static/-web-${HASH}-static/" "$BUILD_FILE"
-    sed -i.bak 's|libvips/build-win64-mxe|ollm/build-win64-mxe-custom|' "$BUILD_FILE"
-    sed -i.bak "s|\${VERSION_VIPS_SHORT}|${HASH}|g" "$BUILD_FILE"
+    grep -q 'ollm/build-win64-mxe-custom' "$BUILD_FILE" && exit 0
 
     # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-3
-    sed -i.bak 's/v${VERSION_VIPS}/v${VERSION_VIPS}-3/' "$BUILD_FILE"
+    sed -i.bak 's|v\${VERSION_VIPS}|v${VERSION_VIPS}-3|' "$BUILD_FILE"
+
+    # Switch from 'libvips/build-win64-mxe' to 'ollm/build-win64-mxe-custom'
+    sed -i.bak 's|libvips/build-win64-mxe|ollm/build-win64-mxe-custom|' "$BUILD_FILE"
+    sed -i.bak "s|\${VERSION_VIPS}|${HASH}|g" "$BUILD_FILE"
+    sed -i.bak "s|\${VERSION_VIPS_SHORT}|${HASH}|g" "$BUILD_FILE"
 
     rm -f "${BUILD_FILE}.bak"
 
     # Validate
-    grep -q '\-all-' "$BUILD_FILE" || exit 1
+    grep -q 'ollm/build-win64-mxe-custom' "$BUILD_FILE" || exit 1
     ;;
   *)
     # Linux and macOS
