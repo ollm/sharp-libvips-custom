@@ -19,12 +19,12 @@ case ${PLATFORM} in
 
     # Switch from 'libvips/build-win64-mxe' to 'ollm/build-win64-mxe-custom'
     sed -i.bak 's|libvips/build-win64-mxe|ollm/build-win64-mxe-custom|' "$BUILD_FILE"
-    sed -i.bak "s|\${VERSION_VIPS}|${HASH}|g" "$BUILD_FILE"
-    sed -i.bak "s|\${VERSION_VIPS_SHORT}|${HASH}|g" "$BUILD_FILE"
+    sed -i.bak 's|${VERSION_VIPS}|${HASH}|g' "$BUILD_FILE"
+    sed -i.bak 's|${VERSION_VIPS_SHORT}|${HASH}|g' "$BUILD_FILE"
 
     # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-3
-    sed -i.bak 's|v\${VERSION_VIPS}|v${VERSION_VIPS}-3|' "$BUILD_FILE"
-    sed -i.bak 's|v${HASH}|v${VERSION_VIPS}-3|' "$BUILD_FILE"
+    sed -i.bak 's|v${VERSION_VIPS}|v${VERSION_VIPS}-3|g' "$BUILD_FILE"
+    sed -i.bak "s|v${HASH}|v${VERSION_VIPS}-3|" "$BUILD_FILE"
 
     rm -f "${BUILD_FILE}.bak"
 
