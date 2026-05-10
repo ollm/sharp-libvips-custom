@@ -17,16 +17,13 @@ case ${PLATFORM} in
     # Exit early if already patched
     grep -q '\-web-' "$BUILD_FILE" || exit 0
 
-    # Switch from 'web-*-static' to 'all' build variant which includes JXL, HEIC and JP2
-    # Captures the version variable to preserve it: -web-${VERSION_VIPS}-static → -all-${VERSION_VIPS}
-    # sed -i.bak 's/-web-\(.*\)-static/-all-\1/' "$BUILD_FILE"
-    sed -i.bak "s/-web-\(.*\)-static/-all-${HASH}/" "$BUILD_FILE"
+    # Switch from 'libvips/build-win64-mxe' to 'ollm/build-win64-mxe-custom'
+    sed -i.bak "s/-web-\(.*\)-static/-web-${HASH}-static/" "$BUILD_FILE"
     sed -i.bak 's|libvips/build-win64-mxe|ollm/build-win64-mxe-custom|' "$BUILD_FILE"
-    sed -i.bak 's|lib/libvips.lib|lib/*.lib|' "$BUILD_FILE"
     sed -i.bak "s|\${VERSION_VIPS_SHORT}|${HASH}|g" "$BUILD_FILE"
 
-    # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-2
-    sed -i.bak 's/v${VERSION_VIPS}/v${VERSION_VIPS}-2/' "$BUILD_FILE"
+    # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-3
+    sed -i.bak 's/v${VERSION_VIPS}/v${VERSION_VIPS}-3/' "$BUILD_FILE"
 
     rm -f "${BUILD_FILE}.bak"
 
