@@ -24,7 +24,9 @@ case ${PLATFORM} in
 
     # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-4
     # sed -i.bak 's|v${VERSION_VIPS}|v${VERSION_VIPS}-4|g' "$BUILD_FILE"
-    # sed -i.bak "s|v${HASH}|v\${VERSION_VIPS}-4|" "$BUILD_FILE"
+
+    # Change hash to version
+    sed -i.bak "s|v${HASH}|v\${VERSION_VIPS}|" "$BUILD_FILE"
 
     rm -f "${BUILD_FILE}.bak"
 
