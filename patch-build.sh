@@ -23,8 +23,8 @@ case ${PLATFORM} in
     sed -i.bak "s|\${VERSION_VIPS_SHORT}|${HASH}|g" "$BUILD_FILE"
 
     # Temporarily, v${VERSION_VIPS} to v${VERSION_VIPS}-4
-    sed -i.bak 's|v${VERSION_VIPS}|v${VERSION_VIPS}-4|g' "$BUILD_FILE"
-    sed -i.bak "s|v${HASH}|v\${VERSION_VIPS}-4|" "$BUILD_FILE"
+    # sed -i.bak 's|v${VERSION_VIPS}|v${VERSION_VIPS}-4|g' "$BUILD_FILE"
+    # sed -i.bak "s|v${HASH}|v\${VERSION_VIPS}-4|" "$BUILD_FILE"
 
     rm -f "${BUILD_FILE}.bak"
 

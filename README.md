@@ -49,16 +49,16 @@ npm install
 			"@img/sharp-win32-ia32": "npm:@img-custom/sharp-win32-ia32@0.12.0",
 			"@img/sharp-win32-x64": "npm:@img-custom/sharp-win32-x64@0.12.0",
 
-			"@img/sharp-libvips-darwin-arm64": "npm:@img-custom/sharp-libvips-darwin-arm64@1.3.0-rc.6-4",
-			"@img/sharp-libvips-darwin-x64": "npm:@img-custom/sharp-libvips-darwin-x64@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linux-arm": "npm:@img-custom/sharp-libvips-linux-arm@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linux-arm64": "npm:@img-custom/sharp-libvips-linux-arm64@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linux-ppc64": "npm:@img-custom/sharp-libvips-linux-ppc64@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linux-riscv64": "npm:@img-custom/sharp-libvips-linux-riscv64@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linux-s390x": "npm:@img-custom/sharp-libvips-linux-s390x@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linux-x64": "npm:@img-custom/sharp-libvips-linux-x64@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linuxmusl-arm64": "npm:@img-custom/sharp-libvips-linuxmusl-arm64@1.3.0-rc.6-4",
-			"@img/sharp-libvips-linuxmusl-x64": "npm:@img-custom/sharp-libvips-linuxmusl-x64@1.3.0-rc.6-4"
+			"@img/sharp-libvips-darwin-arm64": "npm:@img-custom/sharp-libvips-darwin-arm64@1.3.0-rc.7",
+			"@img/sharp-libvips-darwin-x64": "npm:@img-custom/sharp-libvips-darwin-x64@1.3.0-rc.7",
+			"@img/sharp-libvips-linux-arm": "npm:@img-custom/sharp-libvips-linux-arm@1.3.0-rc.7",
+			"@img/sharp-libvips-linux-arm64": "npm:@img-custom/sharp-libvips-linux-arm64@1.3.0-rc.7",
+			"@img/sharp-libvips-linux-ppc64": "npm:@img-custom/sharp-libvips-linux-ppc64@1.3.0-rc.7",
+			"@img/sharp-libvips-linux-riscv64": "npm:@img-custom/sharp-libvips-linux-riscv64@1.3.0-rc.7",
+			"@img/sharp-libvips-linux-s390x": "npm:@img-custom/sharp-libvips-linux-s390x@1.3.0-rc.7",
+			"@img/sharp-libvips-linux-x64": "npm:@img-custom/sharp-libvips-linux-x64@1.3.0-rc.7",
+			"@img/sharp-libvips-linuxmusl-arm64": "npm:@img-custom/sharp-libvips-linuxmusl-arm64@1.3.0-rc.7",
+			"@img/sharp-libvips-linuxmusl-x64": "npm:@img-custom/sharp-libvips-linuxmusl-x64@1.3.0-rc.7"
 		}
 	}
 }
