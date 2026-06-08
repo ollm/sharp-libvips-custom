@@ -55,7 +55,7 @@ case ${PLATFORM} in
     # Enable DAV1D AV1 decoder
     sed -i.bak 's/-DWITH_X265=0/-DWITH_X265=0 -DWITH_DAV1D=1/' "$BUILD_FILE"
 
-    # Enable high bit depth
+    # Enable high bit depth (Technically no longer necessary since https://github.com/lovell/sharp-libvips/pull/367)
     sed -i.bak 's/-DCONFIG_AV1_HIGHBITDEPTH=0/-DCONFIG_AV1_HIGHBITDEPTH=1/' "$BUILD_FILE"
 
     # Inject dav1d + libde265 build steps before heif build
