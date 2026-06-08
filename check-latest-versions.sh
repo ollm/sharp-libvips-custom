@@ -32,11 +32,11 @@ version_latest() {
   sleep 1
 }
 
-version_latest "brotli" "$VERSION_BROTLI" "google/brotli"
-version_latest "dav1d" "$VERSION_DAV1D" "videolan/dav1d"
-version_latest "de265" "$VERSION_DE265" "strukturag/libde265"
-version_latest "jxl" "$VERSION_JXL" "libjxl/libjxl"
-version_latest "openjpeg" "$VERSION_OPENJPEG" "uclouvain/openjpeg"
+version_latest "brotli" "$VERSION_BROTLI" "15235"
+version_latest "dav1d" "$VERSION_DAV1D" "18920"
+version_latest "de265" "$VERSION_DE265" "11239"
+version_latest "jxl" "$VERSION_JXL" "232764"
+version_latest "openjpeg" "$VERSION_OPENJPEG" "2550"
 
 if [ "$ALL_AT_VERSION_LATEST" = "false" ]; then
   echo "Dependency updates: ${UPDATES[*]}"
