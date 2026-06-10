@@ -35,30 +35,30 @@ npm install
 {
 	"overrides": {
 		"sharp": {
-			"@img/sharp-darwin-arm64": "npm:@img-custom/sharp-darwin-arm64@0.12.0",
-			"@img/sharp-darwin-x64": "npm:@img-custom/sharp-darwin-x64@0.12.0",
-			"@img/sharp-linux-arm": "npm:@img-custom/sharp-linux-arm@0.12.0",
-			"@img/sharp-linux-arm64": "npm:@img-custom/sharp-linux-arm64@0.12.0",
-			"@img/sharp-linux-ppc64": "npm:@img-custom/sharp-linux-ppc64@0.12.0",
-			"@img/sharp-linux-riscv64": "npm:@img-custom/sharp-linux-riscv64@0.12.0",
-			"@img/sharp-linux-s390x": "npm:@img-custom/sharp-linux-s390x@0.12.0",
-			"@img/sharp-linux-x64": "npm:@img-custom/sharp-linux-x64@0.12.0",
-			"@img/sharp-linuxmusl-arm64": "npm:@img-custom/sharp-linuxmusl-arm64@0.12.0",
-			"@img/sharp-linuxmusl-x64": "npm:@img-custom/sharp-linuxmusl-x64@0.12.0",
-			"@img/sharp-win32-arm64": "npm:@img-custom/sharp-win32-arm64@0.12.0",
-			"@img/sharp-win32-ia32": "npm:@img-custom/sharp-win32-ia32@0.12.0",
-			"@img/sharp-win32-x64": "npm:@img-custom/sharp-win32-x64@0.12.0",
+			"@img/sharp-darwin-arm64": "npm:@img-custom/sharp-darwin-arm64@v0.35.0",
+			"@img/sharp-darwin-x64": "npm:@img-custom/sharp-darwin-x64@v0.35.0",
+			"@img/sharp-linux-arm": "npm:@img-custom/sharp-linux-arm@v0.35.0",
+			"@img/sharp-linux-arm64": "npm:@img-custom/sharp-linux-arm64@v0.35.0",
+			"@img/sharp-linux-ppc64": "npm:@img-custom/sharp-linux-ppc64@v0.35.0",
+			"@img/sharp-linux-riscv64": "npm:@img-custom/sharp-linux-riscv64@v0.35.0",
+			"@img/sharp-linux-s390x": "npm:@img-custom/sharp-linux-s390x@v0.35.0",
+			"@img/sharp-linux-x64": "npm:@img-custom/sharp-linux-x64@v0.35.0",
+			"@img/sharp-linuxmusl-arm64": "npm:@img-custom/sharp-linuxmusl-arm64@v0.35.0",
+			"@img/sharp-linuxmusl-x64": "npm:@img-custom/sharp-linuxmusl-x64@v0.35.0",
+			"@img/sharp-win32-arm64": "npm:@img-custom/sharp-win32-arm64@v0.35.0",
+			"@img/sharp-win32-ia32": "npm:@img-custom/sharp-win32-ia32@v0.35.0",
+			"@img/sharp-win32-x64": "npm:@img-custom/sharp-win32-x64@v0.35.0",
 
-			"@img/sharp-libvips-darwin-arm64": "npm:@img-custom/sharp-libvips-darwin-arm64@1.3.0-rc.7",
-			"@img/sharp-libvips-darwin-x64": "npm:@img-custom/sharp-libvips-darwin-x64@1.3.0-rc.7",
-			"@img/sharp-libvips-linux-arm": "npm:@img-custom/sharp-libvips-linux-arm@1.3.0-rc.7",
-			"@img/sharp-libvips-linux-arm64": "npm:@img-custom/sharp-libvips-linux-arm64@1.3.0-rc.7",
-			"@img/sharp-libvips-linux-ppc64": "npm:@img-custom/sharp-libvips-linux-ppc64@1.3.0-rc.7",
-			"@img/sharp-libvips-linux-riscv64": "npm:@img-custom/sharp-libvips-linux-riscv64@1.3.0-rc.7",
-			"@img/sharp-libvips-linux-s390x": "npm:@img-custom/sharp-libvips-linux-s390x@1.3.0-rc.7",
-			"@img/sharp-libvips-linux-x64": "npm:@img-custom/sharp-libvips-linux-x64@1.3.0-rc.7",
-			"@img/sharp-libvips-linuxmusl-arm64": "npm:@img-custom/sharp-libvips-linuxmusl-arm64@1.3.0-rc.7",
-			"@img/sharp-libvips-linuxmusl-x64": "npm:@img-custom/sharp-libvips-linuxmusl-x64@1.3.0-rc.7"
+			"@img/sharp-libvips-darwin-arm64": "npm:@img-custom/sharp-libvips-darwin-arm64@1.3.0",
+			"@img/sharp-libvips-darwin-x64": "npm:@img-custom/sharp-libvips-darwin-x64@1.3.0",
+			"@img/sharp-libvips-linux-arm": "npm:@img-custom/sharp-libvips-linux-arm@1.3.0",
+			"@img/sharp-libvips-linux-arm64": "npm:@img-custom/sharp-libvips-linux-arm64@1.3.0",
+			"@img/sharp-libvips-linux-ppc64": "npm:@img-custom/sharp-libvips-linux-ppc64@1.3.0",
+			"@img/sharp-libvips-linux-riscv64": "npm:@img-custom/sharp-libvips-linux-riscv64@1.3.0",
+			"@img/sharp-libvips-linux-s390x": "npm:@img-custom/sharp-libvips-linux-s390x@1.3.0",
+			"@img/sharp-libvips-linux-x64": "npm:@img-custom/sharp-libvips-linux-x64@1.3.0",
+			"@img/sharp-libvips-linuxmusl-arm64": "npm:@img-custom/sharp-libvips-linuxmusl-arm64@1.3.0",
+			"@img/sharp-libvips-linuxmusl-x64": "npm:@img-custom/sharp-libvips-linuxmusl-x64@1.3.0"
 		}
 	}
 }
