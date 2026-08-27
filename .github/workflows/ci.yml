@@ -1,6 +1,6 @@
 name: CI
 env:
-  SHARP_LIBVIPS_TAG: v1.3.2
+  SHARP_LIBVIPS_TAG: v1.3.3
 on:
   workflow_dispatch:
   push:
