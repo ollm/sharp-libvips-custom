@@ -12,7 +12,7 @@ case ${PLATFORM} in
   win32*)
     # Windows
     BUILD_FILE="build/win.sh"
-    HASH="426af3f"
+    HASH="24ad4d0"
 
     # Exit early if already patched
     grep -q 'ollm/build-win64-mxe-custom' "$BUILD_FILE" && exit 0
