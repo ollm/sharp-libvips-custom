@@ -58,7 +58,7 @@ bash ../custom/patch-wasm-vips.sh "$DIR"
     # Linux and macOS
     BUILD_FILE="build/posix.sh"
 
-    if [[ ${PLATFORM} == linux* ]] && ! grep -q 'sharp-custom: use system GLib at runtime' "$BUILD_FILE"; then
+    if [[ ${PLATFORM} == linux-* ]] && ! grep -q 'sharp-custom: use system GLib at runtime' "$BUILD_FILE"; then
       # Build GLib shared so libvips can use the host's GLib at runtime.
       sed -i.bak \
         -e '/mkdir \${DEPS}\/glib/,/mkdir \${DEPS}\/xml2/s/--default-library=static/--default-library=shared/' \
