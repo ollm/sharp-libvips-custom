@@ -193,3 +193,19 @@ diff --git a/meson.build b/meson.build
 -
  libm = cc.find_library('m', required : false)
  libffi_dep = dependency('libffi', version : '>= 3.0.0', fallback : ['libffi', 'ffi_dep'])
+diff --git a/gio/gdbus-2.0/codegen/utils.py b/gio/gdbus-2.0/codegen/utils.py
+--- a/gio/gdbus-2.0/codegen/utils.py
++++ b/gio/gdbus-2.0/codegen/utils.py
+@@ -18,5 +18,4 @@
+ # Author: David Zeuthen <davidz@redhat.com>
+ 
+-import distutils.version
+ import os
+ import sys
+@@ -145,5 +144,5 @@ def version_cmp_key(key):
+     elif key[0]:
+         v = str(key[0])
+     else:
+         v = "0"
+-    return (distutils.version.LooseVersion(v), key[1])
++    return (tuple(int(part) for part in v.split(".")), key[1])
