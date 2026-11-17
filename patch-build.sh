@@ -68,6 +68,24 @@ bash ../custom/patch-wasm-vips.sh "$DIR"
         }
       }
       ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+      sed -i.bak 's/-Dintrospection=disabled //' "$BUILD_FILE"
+      rm -f "${BUILD_FILE}.bak"
+    fi
+
+    if [[ ${PLATFORM} == linux-* ]] && ! grep -q 'sharp-custom: use GLib 2.72-compatible GRegex patch' "$BUILD_FILE"; then
+      grep -q 'glib-without-gregex.patch' "$BUILD_FILE" || {
+        echo "Expected upstream GRegex patch command not found in $BUILD_FILE" >&2
+        exit 1
+      }
+      awk '
+      /glib-without-gregex\.patch/ {
+        print "  # sharp-custom: use GLib 2.72-compatible GRegex patch"
+        print "  patch -p1 < ${PACKAGE}/custom/glib-2.72-no-regex.patch"
+        next
+      }
+      { print }
+      ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+      grep -q 'sharp-custom: use GLib 2.72-compatible GRegex patch' "$BUILD_FILE" || exit 1
     fi
 
     if [[ ${PLATFORM} == linux-* ]] && ! grep -q 'sharp-custom: use system GLib at runtime' "$BUILD_FILE"; then
