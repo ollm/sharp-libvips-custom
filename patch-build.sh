@@ -72,6 +72,23 @@ bash ../custom/patch-wasm-vips.sh "$DIR"
       rm -f "${BUILD_FILE}.bak"
     fi
 
+    if [[ ${PLATFORM} == linux-* ]] && ! grep -q 'sharp-custom: use Pango 1.54.0 with GLib 2.72' "$BUILD_FILE"; then
+      grep -q 'VERSION_GLIB=2.72.0' "$BUILD_FILE" || {
+        echo "Expected GLib 2.72 version assignment not found in $BUILD_FILE" >&2
+        exit 1
+      }
+      awk '
+      {
+        print
+        if ($0 == "    VERSION_GLIB=2.72.0") {
+          print "    # sharp-custom: use Pango 1.54.0 with GLib 2.72"
+          print "    VERSION_PANGO=1.54.0"
+        }
+      }
+      ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+      grep -q 'sharp-custom: use Pango 1.54.0 with GLib 2.72' "$BUILD_FILE" || exit 1
+    fi
+
     if [[ ${PLATFORM} == linux-* ]] && ! grep -q 'sharp-custom: use GLib 2.72-compatible GRegex patch' "$BUILD_FILE"; then
       grep -q 'glib-without-gregex.patch' "$BUILD_FILE" || {
         echo "Expected upstream GRegex patch command not found in $BUILD_FILE" >&2
