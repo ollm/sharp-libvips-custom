@@ -33,6 +33,27 @@ case ${PLATFORM} in
     # Validate
     grep -q 'ollm/build-win64-mxe-custom' "$BUILD_FILE" || exit 1
     ;;
+  dev-wasm32)
+    BUILD_FILE="build/wasm.sh"
+
+    # Exit early if already patched
+    grep -q 'patch-wasm-vips.sh' "$BUILD_FILE" && exit 0
+
+    # Enable JXL
+    sed -i.bak 's/ --disable-jxl//' "$BUILD_FILE"
+
+    # Patch downloaded wasm-vips
+    sed -i.bak '/# Check libvips versions match/i\
+bash ../custom/patch-wasm-vips.sh "$DIR"
+' "$BUILD_FILE"
+
+    rm -f "${BUILD_FILE}.bak"
+
+    # Validate
+    grep -q 'bash ../custom/patch-wasm-vips.sh "$DIR"' "$BUILD_FILE" || exit 1
+    ! grep -q -- '--disable-jxl' "$BUILD_FILE" || exit 1
+    grep -q -- '--enable-libvips-cpp' "$BUILD_FILE" || exit 1
+    ;;
   *)
     # Linux and macOS
     BUILD_FILE="build/posix.sh"
