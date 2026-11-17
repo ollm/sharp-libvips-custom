@@ -58,6 +58,30 @@ bash ../custom/patch-wasm-vips.sh "$DIR"
     # Linux and macOS
     BUILD_FILE="build/posix.sh"
 
+    if [[ ${PLATFORM} == linux* ]] && ! grep -q 'sharp-custom: use system GLib at runtime' "$BUILD_FILE"; then
+      # Build GLib shared so libvips can use the host's GLib at runtime.
+      sed -i.bak \
+        -e '/mkdir \${DEPS}\/glib/,/mkdir \${DEPS}\/xml2/s/--default-library=static/--default-library=shared/' \
+        -e '/mkdir \${DEPS}\/glib/,/mkdir \${DEPS}\/xml2/s/--tag bin-devel,devel/--tag bin-devel,devel,runtime/' \
+        "$BUILD_FILE"
+      rm -f "${BUILD_FILE}.bak"
+
+      # Keep the generated GLib libraries out of the Linux package.
+      awk '
+      {
+        print
+        if (index($0, "base_dep=$(basename $dep)") > 0) {
+          print "    # sharp-custom: use system GLib at runtime"
+          print "    if [ \"$LINUX\" = true ]; then"
+          print "      case \"$base_dep\" in"
+          print "        libglib-2.0.so*|libgobject-2.0.so*|libgmodule-2.0.so*|libgio-2.0.so*|libgthread-2.0.so*) continue ;;"
+          print "      esac"
+          print "    fi"
+        }
+      }
+      ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+    fi
+
     # Exit early if already patched
     grep -q 'jpeg-xl=disabled' "$BUILD_FILE" || exit 0
 
