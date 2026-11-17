@@ -58,6 +58,18 @@ bash ../custom/patch-wasm-vips.sh "$DIR"
     # Linux and macOS
     BUILD_FILE="build/posix.sh"
 
+    if [[ ${PLATFORM} == linux-* ]] && ! grep -q 'sharp-custom: build against GLib 2.72' "$BUILD_FILE"; then
+      awk '
+      {
+        print
+        if ($0 == "    LINUX=true") {
+          print "    # sharp-custom: build against GLib 2.72"
+          print "    VERSION_GLIB=2.72.0"
+        }
+      }
+      ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
+    fi
+
     if [[ ${PLATFORM} == linux-* ]] && ! grep -q 'sharp-custom: use system GLib at runtime' "$BUILD_FILE"; then
       # Build GLib shared so libvips can use the host's GLib at runtime.
       sed -i.bak \
