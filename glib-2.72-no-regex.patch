@@ -83,6 +83,11 @@ diff --git a/glib/glib.h b/glib/glib.h
 diff --git a/glib/meson.build b/glib/meson.build
 --- a/glib/meson.build
 +++ b/glib/meson.build
+@@ -1,3 +1,4 @@
+ glibconfig_h = configure_file(input : 'glibconfig.h.in', output : 'glibconfig.h',
+   install_dir : join_paths(get_option('libdir'), 'glib-2.0/include'),
++  install_tag : 'devel',
+   configuration : glibconfig_conf)
 @@ -184,7 +184,6 @@ glib_sub_headers = files(
    'grcbox.h',
    'grefcount.h',
