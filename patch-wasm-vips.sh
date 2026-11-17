@@ -44,6 +44,7 @@ sed -i.bak 's|\${DISABLE_JXL:+-Djpeg-xl=disabled}|${DISABLE_JXL:+-Djpeg-xl=disab
 sed -i.bak 's/-Dopenjpeg=disabled/-Dopenjpeg=enabled/' "$BUILD_FILE"
 
 rm -f "${BUILD_FILE}.bak"
+chmod +x "$BUILD_FILE"
 
 # Validate
 grep -Fq '# CUSTOM - OPENJPEG START' "$BUILD_FILE"
