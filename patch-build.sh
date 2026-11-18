@@ -68,7 +68,11 @@ bash ../custom/patch-wasm-vips.sh "$DIR"
         }
       }
       ' "$BUILD_FILE" > /tmp/posix.sh.tmp && mv /tmp/posix.sh.tmp "$BUILD_FILE"
-      sed -i.bak 's/-Dintrospection=disabled //' "$BUILD_FILE"
+      grep -q -- '--force-fallback-for=gvdb -Dintrospection=disabled' "$BUILD_FILE" || {
+        echo "Expected GLib introspection option not found in $BUILD_FILE" >&2
+        exit 1
+      }
+      sed -i.bak 's/--force-fallback-for=gvdb -Dintrospection=disabled/--force-fallback-for=gvdb/' "$BUILD_FILE"
       rm -f "${BUILD_FILE}.bak"
     fi
 
